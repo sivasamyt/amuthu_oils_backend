@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\productController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\cartController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +20,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/uploadProduct',[productController::class,'createProduct']);
+Route::get('/Product/{id?}',[productController::class,'view']);
+// Route::get('/Product',[productController::class,'view']);
+
+
+// user models
+Route::post('/signup',[UserController::class,'signup']);
+Route::post('/login',[UserController::class,'loginCheck']);
+
+// Order details using Repository pattern
+Route::post('/addCart',[cartController::class,'addCart']);
+Route::get('/getCart/{id}',[cartController::class,'getCart']);
+Route::put('/remove_item/{id}',[cartController::class,'remove_item']);
+Route::post('/place_order',[OrderController::class,'create']);
