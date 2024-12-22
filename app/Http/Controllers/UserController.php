@@ -26,13 +26,17 @@ class UserController extends Controller
             // Log::info($user->id);
             if($user->id == 1){
         // Log::info('if entry');
-                $user->update(['role' => 'Admin']);
+                $user->update(['role' => 'admin']);
             }
-            
-            return 'success';
+            return response()->json([
+                'message' => 'Signed up successfully',
+                'success' => true,
+            ], 200);
         } catch (\Throwable $th) {
-            // Log::info($th);
-            return 'failed';
+            return response()->json([
+                'message' => 'Something went wrong. Please try again later.',
+                'success' => false,
+            ], 401);
         }
     }
 
@@ -44,7 +48,7 @@ class UserController extends Controller
             $user = User::where('email', $mailId)->first();
             $password = $user->password;
             if (Hash::check($pwd, $password)) {
-                // return $users;
+                // return $user;
                 return response()->json([
                     'message' => 'Login successful',
                     'user' => $user

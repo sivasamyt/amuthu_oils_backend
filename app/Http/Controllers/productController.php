@@ -13,23 +13,27 @@ class productController extends Controller
     {
         try {
             // Log::info('entry');
-            // Log::info(json_encode($request));
+            // Log::info('$request->productName-----'.$request->productName);
+            // Log::info('$request->Description-----'.$request->Description);
+            // Log::info('$request->Quantity-----'.$request->Quantity);
+            // Log::info('$request->imageName-----'.$request->imageName);
+            // Log::info('$request->Price-----'.$request->Price);
+            // Log::info(json_encode($request->all()));
             Product::create([
                 'name' => $request->productName,
                 'description' => $request->Description,
                 'quantity' => $request->Quantity,
                 'image_name' => $request->imageName,
-                'image' => $request->image
+                'image' => $request->image,
+                'price' => $request->Price,
             ]);
             // Log::info('entry2');
-            return response()->json(['message' => 'Image uploaded successfully']);
-
+            return response()->json(['message' => 'Image uploaded successfully', 'success' => true]);
 
         } catch (\Throwable $th) {
             // Log::info('error'.$th);
             return response()->json(['message' => 'No image uploaded'], 400);
         }
-
     }
     public function view($product_id = ''){
         // $products = Product::query();
